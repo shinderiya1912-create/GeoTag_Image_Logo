@@ -5,3 +5,5 @@ rembg
 geopy
 piexif
 numpy
+streamlit-js-eval
+googlemaps
