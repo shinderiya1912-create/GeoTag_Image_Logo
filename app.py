@@ -184,12 +184,21 @@ if captured:
     gps_str = f"GPS: {st.session_state.lat}, {st.session_state.lon}"
     addr_wrapped = textwrap.fill(st.session_state.full_address, width=40)
     
+    # Calculate box height
     overlay = f"{venue_name}\n{'─'*20}\n{timestamp}\n{gps_str}\n{addr_wrapped}"
-    
     lines = overlay.count("\n") + 1
     box_h = 80 + (lines * 32)
-    draw.rectangle([0, raw_img.height - box_h, raw_img.width, raw_img.height], fill=(0,0,0, 170))
-    draw.text((35, raw_img.height - box_h + 30), overlay, fill="white")
+
+    # Draw more visible translucent rectangle (less transparent)
+    draw.rectangle(
+    [0, raw_img.height - box_h, raw_img.width, raw_img.height],
+    fill=(0, 0, 0, 180)  # Increase alpha to 180 for more clarity
+    )
+
+    # Draw fully opaque white text
+    draw.text((35, raw_img.height - box_h + 30), overlay, fill=(255, 255, 255, 255))
+
+    
     
     st.markdown("### ✨ Preview")
     st.image(raw_img, use_container_width=True)
